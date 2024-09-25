@@ -1,0 +1,14 @@
+select ma.id,pt.calendarinicio,
+concat('Se solicita cancelacion del movimiento ',m.id,
+' [Alumno: ',p.apellidopaterno,' ',p.apellidomaterno,' ',p.nombres,
+' Matricula: ',a.matriculaparteinvariable,']') motivo,
+m.cancelado,mc.*
+from movimientoalumno ma
+inner join movimiento m on ma.id=m.id
+left join movimientodeinscripcion mi on ma.id=mi.id
+left join movimientoinscripciongrupo mig on ma.id=mig.id
+inner join alumnouadymatriculado a on ma.idalumnouadymatriculado=a.id
+inner join persona p on a.idpersona=p.id
+left join movimientodecancelacion mc on m.id=mc.idmovimientocancelado
+inner join periodotiempo pt on m.idperiodocurso=pt.id
+where ma.id in (6089234);
